@@ -46,19 +46,20 @@ This project simulates a fully operational small business network architecture u
 - Remote access setup
 - Centralized management
 
-## Network Design Architecture
-```mermaid
-graph TD
-    A[Internet] --> B[Firewall]
-    B --> C[Core Switch]
-    C --> D[Internal VLANs]
-    C --> E[Server VLAN]
-    C --> F[Guest VLAN]
-    D --> G[Employee Workstations]
-    E --> H[Application Server]
-    F --> I[Guest Wi-Fi]
+## 📂 Files Included
+- `.pkt` file (Cisco Packet Tracer project)
+- Configuration files and documentation (if applicable)
+- `README.md` (this file)
 
+## 📚 How to Open
+1. Download and install [Cisco Packet Tracer](https://www.netacad.com/courses/packet-tracer).
+2. Open the `.pkt` file in Packet Tracer.
+3. Explore the topology and configurations in simulation or real-time mode.
 
+## 📞 Contact
+For feedback or inquiries, feel free to reach out via GitHub Issues or Pull Requests.
+
+---
 
 🎯 **This project is ideal for:**
 - Networking students
@@ -66,6 +67,4 @@ graph TD
 - Small business infrastructure designers
 - Security-focused network engineers
 
-
-
-
+---

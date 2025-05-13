@@ -1,0 +1,134 @@
+!
+version 15.1
+service timestamps log datetime msec
+service timestamps debug datetime msec
+service password-encryption
+security passwords min-length 8
+!
+hostname R0
+!
+login block-for 20 attempts 3 within 60
+login on-failure log
+login on-success log
+!
+!
+enable secret 5 $1$mERr$gc0bTUXHJaVERV37j2m5D0
+!
+!
+!
+!
+!
+aaa new-model
+!
+aaa authentication login default group radius local-case 
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524QY4S-
+license boot module c2900 technology-package uck9
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip ssh version 2
+no ip domain-lookup
+ip domain-name real.com
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 100.0.0.1 255.255.255.252
+ ip nat outside
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ ip address 20.0.0.2 255.255.255.252
+ ip nat inside
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ ip address 20.0.0.10 255.255.255.252
+ ip nat inside
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 20.0.0.0 0.0.0.3 area 0
+ network 100.0.0.0 0.0.0.3 area 0
+ network 20.0.0.8 0.0.0.3 area 0
+!
+ip nat pool out0-3 100.0.0.1 100.0.0.1 netmask 255.255.255.252
+ip nat inside source list 1 pool out0-3 overload
+ip classless
+ip route 192.168.0.0 255.255.252.0 20.0.0.1 
+!
+ip flow-export version 9
+!
+!
+ip access-list extended sl_def_acl
+ deny tcp any any eq telnet
+ deny tcp any any eq www
+ deny tcp any any eq 22
+ permit tcp any any eq 22
+access-list 1 permit 192.168.0.0 0.0.3.255
+!
+!
+radius server 192.168.1.7
+ address ipv4 192.168.1.7 auth-port 1645
+ key 123
+!
+!
+!
+logging 192.168.1.7
+line con 0
+ exec-timeout 2 0
+ logging synchronous
+ login authentication default
+!
+line aux 0
+!
+line vty 0
+ exec-timeout 2 0
+ logging synchronous
+ login authentication default
+ transport input ssh
+line vty 1 4
+line vty 5 15
+!
+!
+ntp authentication-key 2 md5 08701E1D5D4C 7
+ntp authenticate
+ntp trusted-key 2
+ntp server 20.0.0.1 key 2
+ntp update-calendar
+!
+end
+

@@ -1,0 +1,328 @@
+!
+version 12.2(37)SE1
+service timestamps log datetime msec
+service timestamps debug datetime msec
+service password-encryption
+!
+hostname MLS1
+!
+login block-for 20 attempts 3 within 60
+login on-failure log
+login on-success log
+!
+enable secret 5 $1$mERr$3HhIgMGBA/9qNmgzccuxv0
+!
+!
+!
+!
+!
+aaa new-model
+!
+aaa authentication login default group radius local-case 
+!
+!
+!
+!
+!
+!
+ip routing
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip dhcp snooping information option allow-untrusted
+ip dhcp snooping
+!
+ip ssh version 2
+no ip domain-lookup
+ip domain-name real.com
+!
+!
+spanning-tree mode rapid-pvst
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel4
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode passive
+!
+interface FastEthernet0/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode passive
+!
+interface FastEthernet0/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode passive
+!
+interface FastEthernet0/4
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode desirable
+!
+interface FastEthernet0/5
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode desirable
+!
+interface FastEthernet0/6
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode desirable
+!
+interface FastEthernet0/7
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface FastEthernet0/8
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface FastEthernet0/9
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface FastEthernet0/10
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 4 mode desirable
+!
+interface FastEthernet0/11
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 4 mode desirable
+!
+interface FastEthernet0/12
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 4 mode desirable
+!
+interface FastEthernet0/13
+ ip arp inspection trust
+ ip dhcp snooping trust
+ switchport access vlan 3
+ switchport mode access
+!
+interface FastEthernet0/14
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/15
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/16
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/17
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/18
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/19
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/20
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/21
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/22
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/23
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/24
+ no lldp receive
+ no lldp transmit
+ switchport access vlan 404
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface GigabitEthernet0/1
+ ip arp inspection trust
+ ip dhcp snooping trust
+ switchport access vlan 200
+ switchport mode access
+!
+interface GigabitEthernet0/2
+ ip arp inspection trust
+ ip dhcp snooping trust
+ switchport access vlan 200
+ switchport mode access
+!
+interface Vlan1
+ no ip address
+ ip helper-address 192.168.1.7
+ shutdown
+!
+interface Vlan3
+ mac-address 0060.5c1a.5301
+ ip address 192.168.2.19 255.255.255.240
+ ip helper-address 192.168.1.7
+!
+interface Vlan30
+ mac-address 0060.5c1a.5302
+ ip address 192.168.1.129 255.255.255.224
+ ip helper-address 192.168.1.7
+!
+interface Vlan40
+ mac-address 0060.5c1a.5303
+ ip address 192.168.1.161 255.255.255.224
+ ip helper-address 192.168.1.7
+!
+interface Vlan50
+ mac-address 0060.5c1a.5304
+ ip address 192.168.1.193 255.255.255.224
+ ip helper-address 192.168.1.7
+!
+interface Vlan60
+ mac-address 0060.5c1a.5305
+ ip address 192.168.1.225 255.255.255.224
+ ip helper-address 192.168.1.7
+!
+interface Vlan200
+ mac-address 0060.5c1a.5306
+ ip address 10.0.0.10 255.255.255.248
+!
+ip classless
+ip route 60.0.0.0 255.255.255.248 10.0.0.11 
+ip route 0.0.0.0 0.0.0.0 10.0.0.11 
+ip route 0.0.0.0 0.0.0.0 10.0.0.9 2
+!
+ip flow-export version 9
+!
+!
+ip access-list extended sl_def_acl
+ deny tcp any any eq telnet
+ deny tcp any any eq www
+ deny tcp any any eq 22
+ permit tcp any any eq 22
+!
+!
+radius-server host 192.168.1.7 auth-port 1645 key 123
+!
+!
+!
+!
+logging 192.168.1.8
+line con 0
+ exec-timeout 2 0
+ logging synchronous
+ login authentication default
+!
+line aux 0
+!
+line vty 0
+ exec-timeout 2 0
+ logging synchronous
+ login authentication default
+ transport input ssh
+line vty 1 4
+line vty 5 15
+!
+!
+!
+ntp authentication-key 1 md5 08701E1D 7
+ntp authenticate
+ntp trusted-key 1
+ntp server 192.168.1.7 key 1
+ntp update-calendar
+!
+end
+

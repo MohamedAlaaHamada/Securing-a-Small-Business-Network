@@ -1,0 +1,105 @@
+!
+version 12.1
+service timestamps log datetime msec
+service timestamps debug datetime msec
+service password-encryption
+!
+hostname Admin-IT-Sw
+!
+enable secret 5 $1$mERr$3HhIgMGBA/9qNmgzccuxv0
+!
+!
+!
+ip ssh version 2
+no ip domain-lookup
+!
+username admin secret 5 $1$mERr$4dpRATIgxQacPVK0CfNV4/
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+interface Port-channel3
+ switchport mode trunk
+!
+interface FastEthernet0/1
+ switchport mode access
+ switchport voice vlan 3
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 0002.4A60.D57C
+ switchport port-security mac-address sticky 000A.41A2.60D0
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet1/1
+ switchport access vlan 2
+ switchport mode access
+ switchport voice vlan 3
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 0001.4265.70D7
+ switchport port-security mac-address sticky 000D.BD27.5019
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet2/1
+ description Administration LWAP
+ switchport trunk native vlan 2
+ switchport trunk allowed vlan 2
+ switchport mode trunk
+!
+interface GigabitEthernet3/1
+ description IT LWAP
+ switchport trunk allowed vlan 1
+ switchport mode trunk
+!
+interface GigabitEthernet4/1
+ description WLC
+ switchport mode trunk
+!
+interface FastEthernet5/1
+ switchport mode trunk
+ channel-group 3 mode auto
+!
+interface FastEthernet6/1
+ switchport mode trunk
+ channel-group 3 mode auto
+!
+interface FastEthernet7/1
+ switchport mode trunk
+ channel-group 3 mode auto
+!
+interface Vlan1
+ ip address dhcp
+!
+logging 192.168.1.7
+!
+!
+!
+line con 0
+ logging synchronous
+ login local
+ exec-timeout 2 0
+!
+line vty 0
+ exec-timeout 2 0
+ logging synchronous
+ login local
+ transport input ssh
+line vty 1 4
+ no login
+line vty 5 15
+ no login
+!
+!
+!
+ntp authenticate
+ntp trusted-key 1
+ntp server 192.168.1.7 key 1
+!
+end
+

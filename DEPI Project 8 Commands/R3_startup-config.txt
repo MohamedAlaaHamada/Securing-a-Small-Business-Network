@@ -1,0 +1,115 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R3
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524MY1R-
+license boot module c2900 technology-package securityk9
+!
+!
+!
+crypto isakmp policy 10
+ encr aes 256
+ authentication pre-share
+ group 2
+!
+crypto isakmp key vpn123 address 209.111.44.1
+!
+!
+!
+crypto ipsec transform-set vpn-set esp-aes esp-sha-hmac
+!
+crypto map vpn-map 10 ipsec-isakmp 
+ set peer 209.111.44.1
+ set transform-set vpn-set 
+ match address vpn-acl
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 172.16.1.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/0/0
+ ip address 209.111.44.2 255.255.255.252
+ clock rate 2000000
+ crypto map vpn-map
+!
+interface Serial0/0/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 209.111.44.0 0.0.0.3 area 0
+ network 172.16.1.0 0.0.0.255 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+ip access-list extended vpn-acl
+ permit ip 172.16.1.0 0.0.0.255 100.0.0.0 0.0.0.3
+ permit ip 172.16.1.0 0.0.0.255 100.0.0.4 0.0.0.3
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

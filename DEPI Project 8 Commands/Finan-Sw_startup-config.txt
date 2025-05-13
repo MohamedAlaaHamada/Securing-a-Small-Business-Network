@@ -1,0 +1,290 @@
+!
+version 15.0
+service timestamps log datetime msec
+service timestamps debug datetime msec
+service password-encryption
+!
+hostname Finan-Sw
+!
+enable secret 5 $1$mERr$3HhIgMGBA/9qNmgzccuxv0
+!
+!
+!
+!
+!
+aaa new-model
+!
+aaa authentication login default group radius local-case 
+!
+!
+!
+!
+ip ssh version 2
+no ip domain-lookup
+ip domain-name real.com
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+interface Port-channel1
+ switchport mode trunk
+!
+interface FastEthernet0/1
+ switchport access vlan 40
+ switchport mode access
+ switchport voice vlan 3
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 0001.634E.A9E9
+ switchport port-security mac-address sticky 0001.969B.C3B4
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/2
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 00E0.A31C.0BC8
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/3
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 0004.9A48.693A
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/4
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 0001.636B.4D28
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/5
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 0030.A388.7234
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/6
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 0005.5E2C.E9D7
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/7
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 00E0.B037.7505
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/8
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 000D.BDCB.90D5
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/9
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 0001.42E9.B0BB
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/10
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 00E0.8F1E.DA4A
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/11
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 00D0.D3BD.3B17
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/12
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 0001.435B.3677
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/13
+ switchport mode trunk
+ channel-group 1 mode auto
+!
+interface FastEthernet0/14
+ switchport mode trunk
+ channel-group 1 mode auto
+!
+interface FastEthernet0/15
+ switchport mode trunk
+ channel-group 1 mode auto
+!
+interface FastEthernet0/16
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/17
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/18
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/19
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/20
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/21
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/22
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/23
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface FastEthernet0/24
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface GigabitEthernet0/1
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface GigabitEthernet0/2
+ switchport access vlan 404
+ no lldp receive
+ no lldp transmit
+ switchport mode access
+ switchport nonegotiate
+ no cdp enable
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan40
+ ip address 192.168.1.164 255.255.255.224
+!
+ip default-gateway 192.168.1.161
+!
+logging 192.168.1.7
+radius-server host 192.168.1.7 auth-port 1645 key 123
+!
+!
+!
+line con 0
+ logging synchronous
+ login
+ exec-timeout 2 0
+!
+line vty 0
+ exec-timeout 2 0
+ logging synchronous
+ login authentication default
+ transport input ssh
+line vty 1 4
+line vty 5 15
+!
+!
+!
+ntp authenticate
+ntp trusted-key 1
+ntp server 192.168.1.7 key 1
+!
+end
+

@@ -1,0 +1,164 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname VoIP
+!
+!
+!
+ip dhcp relay information trust-all
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX1017K65G-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+ip domain-name real.com
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.2.18 255.255.255.240
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 192.168.2.17 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+logging 192.168.1.7
+telephony-service
+ max-ephones 8
+ max-dn 8
+ ip source-address 192.168.1.7 port 2000
+!
+ephone-dn 1
+ number 1
+!
+ephone-dn 2
+ number 2
+!
+ephone-dn 3
+ number 10
+!
+ephone-dn 4
+ number 20
+!
+ephone-dn 5
+ number 30
+!
+ephone-dn 6
+ number 40
+!
+ephone-dn 7
+ number 50
+!
+ephone-dn 8
+ number 60
+!
+ephone 1
+ device-security-mode none
+ mac-address 0002.4A60.D57C
+ type 7960
+ button 1:1
+!
+ephone 2
+ device-security-mode none
+ mac-address 000D.BD27.5019
+ type 7960
+ button 1:2
+!
+ephone 3
+ device-security-mode none
+ mac-address 0030.A366.DE25
+ type 7960
+ button 1:3
+!
+ephone 4
+ device-security-mode none
+ mac-address 00D0.BABE.24D8
+ type 7960
+ button 1:4
+!
+ephone 5
+ device-security-mode none
+ mac-address 0001.43D2.1E10
+ type 7960
+ button 1:5
+!
+ephone 6
+ device-security-mode none
+ mac-address 0001.969B.C3B4
+ type 7960
+ button 1:6
+!
+ephone 7
+ device-security-mode none
+ mac-address 000B.BE74.6BD7
+ type 7960
+ button 1:7
+!
+ephone 8
+ device-security-mode none
+ mac-address 0000.0C85.3A80
+ type 7960
+ button 1:8
+!
+line con 0
+ logging synchronous
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+ntp authentication-key 1 md5 08701E1D 7
+ntp authenticate
+ntp server 192.168.1.7 key 1
+ntp update-calendar
+!
+end
+

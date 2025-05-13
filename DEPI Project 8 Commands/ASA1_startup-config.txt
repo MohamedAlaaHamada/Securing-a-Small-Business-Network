@@ -1,0 +1,145 @@
+: Saved
+: Written by enable_15 at 06:29:27 UTC May 11 2025
+: Call-home enabled from prompt by enable_15 at 06:29:27 UTC May 11 2025
+:
+ASA Version 9.6(1)
+!
+hostname ASA1
+domain-name real.com
+enable password Ne88Ah9pALg7rn0g encrypted
+names
+!
+interface GigabitEthernet1/1
+ nameif OUTSIDE0
+ security-level 0
+ ip address 20.0.0.1 255.255.255.252
+!
+interface GigabitEthernet1/2
+ nameif OUTSIDE1
+ security-level 0
+ ip address 20.0.0.5 255.255.255.252
+!
+interface GigabitEthernet1/3
+ nameif INSIDE1
+ security-level 100
+ ip address 10.0.0.9 255.255.255.248
+!
+interface GigabitEthernet1/4
+ nameif INSIDE0
+ security-level 100
+ ip address 10.0.0.1 255.255.255.248
+!
+interface GigabitEthernet1/5
+ nameif DMZ
+ security-level 50
+ ip address 60.0.0.1 255.255.255.248
+!
+interface GigabitEthernet1/6
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/7
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/8
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface Management1/1
+ management-only
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+!
+route INSIDE0 192.168.2.0 255.255.255.240 10.0.0.2 1
+route INSIDE0 192.168.1.96 255.255.255.224 10.0.0.2 1
+route INSIDE0 192.168.2.16 255.255.255.240 10.0.0.2 1
+route INSIDE0 192.168.1.64 255.255.255.224 10.0.0.2 1
+route INSIDE1 192.168.1.128 255.255.255.224 10.0.0.10 1
+route INSIDE1 192.168.1.160 255.255.255.224 10.0.0.10 1
+route INSIDE1 192.168.1.192 255.255.255.224 10.0.0.10 1
+route INSIDE1 192.168.1.224 255.255.255.224 10.0.0.10 1
+route INSIDE0 192.168.1.0 255.255.255.192 10.0.0.2 1
+route OUTSIDE0 0.0.0.0 0.0.0.0 20.0.0.2 1
+route OUTSIDE1 0.0.0.0 0.0.0.0 20.0.0.6 2
+!
+access-list in-any extended permit ip any any
+access-list any-dmz extended permit tcp any 60.0.0.0 255.255.255.248 eq www
+access-list any-dmz extended permit tcp any 60.0.0.0 255.255.255.248 eq 443
+access-list any-dmz extended permit udp any 60.0.0.0 255.255.255.248 eq domain
+access-list any-dmz extended permit tcp any 60.0.0.0 255.255.255.248 eq pop3
+access-list any-dmz extended permit tcp any 60.0.0.0 255.255.255.248 eq smtp
+access-list any-dmz extended permit icmp any 60.0.0.0 255.255.255.248
+access-list out-in extended permit udp host 20.0.0.2 host 192.168.1.7 eq 514
+access-list out-in extended permit udp 20.0.0.0 255.255.255.240 host 192.168.1.7 eq 1645
+access-list out-in extended permit icmp any any
+access-list out-in extended permit udp 20.0.0.0 255.255.255.240 host 192.168.1.7 eq tftp
+access-list dmz-any extended permit icmp 60.0.0.0 255.255.255.248 any echo-reply
+access-list dmz-any extended permit tcp 60.0.0.0 255.255.255.248 any eq www
+access-list dmz-any extended permit tcp 60.0.0.0 255.255.255.248 any eq 443
+access-list dmz-any extended permit udp 60.0.0.0 255.255.255.248 any eq domain
+access-list dmz-any extended permit tcp 60.0.0.0 255.255.255.248 any eq pop3
+access-list dmz-any extended permit tcp 60.0.0.0 255.255.255.248 any eq smtp
+access-list dmz-any extended permit udp 60.0.0.0 255.255.255.248 host 192.168.1.7 eq 1645
+access-list dmz-any extended permit udp 60.0.0.0 255.255.255.248 host 192.168.1.7 eq 514
+access-list dmz-any extended permit udp host 60.0.0.5 host 192.168.1.7 eq tftp
+!
+!
+access-group in-any in interface INSIDE0
+access-group in-any in interface INSIDE1
+access-group any-dmz out interface DMZ
+access-group out-in in interface OUTSIDE0
+access-group out-in in interface OUTSIDE1
+access-group dmz-any in interface DMZ
+access-group dmz-any out interface INSIDE0
+access-group dmz-any out interface INSIDE1
+aaa authentication ssh console LOCAL
+!
+ntp authentication-key 1 md5 08711419584851464B5E5450727E757C6561004622435754060E
+ntp authentication-key 2 md5 08711419584851464B5E5450727E757C6561004622435754060E
+ntp authenticate
+ntp trusted-key 1
+ntp trusted-key 2
+ntp master 1
+!
+username admin password PddnxMYKcNoF3mwN encrypted
+!
+class-map inspection_default
+ match default-inspection-traffic
+!
+policy-map type inspect dns preset_dns_map
+ parameters
+  message-length maximum 512
+policy-map global_policy
+ class inspection_default
+  inspect dns preset_dns_map
+  inspect ftp 
+  inspect icmp 
+  inspect tftp 
+!
+service-policy global_policy global
+!
+telnet timeout 5
+ssh 192.168.1.0 255.255.255.192 INSIDE0
+ssh timeout 2
+!
+!
+!
+!
+router ospf 1
+ log-adjacency-changes
+ network 60.0.0.0 255.255.255.248 area 0
+ network 20.0.0.0 255.255.255.252 area 0
+ network 20.0.0.4 255.255.255.252 area 0
+ network 10.0.0.0 255.255.255.248 area 0
+ network 10.0.0.8 255.255.255.248 area 0
+!

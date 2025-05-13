@@ -46,18 +46,7 @@ This project simulates a fully operational small business network architecture u
 - Remote access setup
 - Centralized management
 
-## 📂 Files Included
-- `.pkt` file (Cisco Packet Tracer project)
-- Configuration files and documentation (if applicable)
-- `README.md` (this file)
 
-## 📚 How to Open
-1. Download and install [Cisco Packet Tracer](https://www.netacad.com/courses/packet-tracer).
-2. Open the `.pkt` file in Packet Tracer.
-3. Explore the topology and configurations in simulation or real-time mode.
-
-## 📞 Contact
-For feedback or inquiries, feel free to reach out via GitHub Issues or Pull Requests.
 
 ---
 
